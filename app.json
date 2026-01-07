@@ -43,6 +43,9 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "RAWG_API_KEY": "c2758c84208c4f00ad08ece95d1e3e0c"
     }
   }
 }
