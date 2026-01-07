@@ -2,7 +2,6 @@ export interface RawGame {
   name: string;
   slug: string;
   released: string | null;
-  short_description?: string;
   rating: number;
   background_image: string;
 }

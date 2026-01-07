@@ -6,8 +6,8 @@ const GameCard = ({ game }: { game: Game }) => {
     <View style={styles.container}>
       <Image source={{ uri: game.image }} style={styles.image} />
       <Text style={styles.title}>{game.title}</Text>
+      <Text style={styles.score}> SCORE: {game.score}</Text>
       <Text style={styles.description}>{game.description}</Text>
-      <Text style={styles.score}>{game.score}</Text>
     </View>
   );
 };
@@ -34,17 +34,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 3,
   },
   description: {
     fontSize: 14,
-    marginBottom: 5,
     color: "#666",
   },
   score: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#333",
+    color: "green",
+    marginBottom: 5,
   },
 });
 

@@ -9,7 +9,7 @@ export async function getLatestGames(): Promise<Game[]> {
     throw new Error("RAWG_API_KEY not set in app.json extra");
   }
 
-  const res = await fetch(`${RAWG_BASE}/games?ordering=-rating&page_size=24&key=${apiKey}`);
+  const res = await fetch(`${RAWG_BASE}/games?ordering=-rating&page_size=10&key=${apiKey}`);
 
   if (!res.ok) {
     throw new Error(`RAWG API error: ${res.status} ${res.statusText}`);
@@ -21,14 +21,28 @@ export async function getLatestGames(): Promise<Game[]> {
     throw new Error(json.detail || "No results from RAWG API");
   }
 
-  return json.results.map(
-    (item: RawGame): Game => ({
-      title: item.name,
-      slug: item.slug,
-      releaseDate: item.released,
-      description: item.short_description ?? "",
-      score: Math.round(item.rating * 20), // 0–5 → 0–100
-      image: item.background_image,
+  return Promise.all(
+    json.results.map(async (item: RawGame): Promise<Game> => {
+      const detailRes = await fetch(`${RAWG_BASE}/games/${item.slug}?key=${apiKey}`);
+      if (!detailRes.ok) {
+        return {
+          title: item.name,
+          slug: item.slug,
+          releaseDate: item.released,
+          description: "",
+          score: Math.round(item.rating * 20),
+          image: item.background_image,
+        };
+      }
+      const detailJson = await detailRes.json();
+      return {
+        title: item.name,
+        slug: item.slug,
+        releaseDate: item.released,
+        description: detailJson.description_raw || "",
+        score: Math.round(item.rating * 20),
+        image: item.background_image,
+      };
     })
   );
 }
