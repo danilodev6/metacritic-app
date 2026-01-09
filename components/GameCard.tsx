@@ -8,8 +8,12 @@ const Card = ({ game }: { game: Game }) => {
   return (
     <View style={styles.container}>
       <Image source={{ uri: game.image }} style={styles.image} />
-      <Text style={styles.title}>{game.title}</Text>
-      <Score score={game.score} maxScore={100} />
+      <View className="flex-row items-center justify-center">
+        <Text className="text-lg font-bold mr-2" style={styles.title}>
+          {game.title}
+        </Text>
+        <Score score={game.score} maxScore={100} />
+      </View>
       <Text style={styles.description}>{game.description.slice(0, 100)} ...</Text>
     </View>
   );
@@ -78,12 +82,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     color: "#666",
-  },
-  score: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "green",
-    marginBottom: 5,
   },
 });
 

@@ -15,8 +15,8 @@ const Score = ({ score, maxScore }: { score: number; maxScore: number }) => {
   const className = getColor();
 
   return (
-    <View className={`${className} w-8 h-8 rounded-full justify-center items-center`}>
-      <Text className="text-white text-2xl font-bold">{score}</Text>
+    <View className={`${className} w-8 h-8 my-1 rounded-full justify-center items-center`}>
+      <Text className="text-white text-xl font-bold">{score}</Text>
     </View>
   );
 };
