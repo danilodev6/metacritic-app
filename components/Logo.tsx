@@ -30,7 +30,7 @@ const Logo = (props: Props) => (
       fontSize={20}
       fontWeight={600}
     >
-      {"\n    Top Games\n  "}
+      {"\nTop Games\n  "}
     </Text>
   </Svg>
 );

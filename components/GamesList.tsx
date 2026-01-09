@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { FlatList, View, ActivityIndicator } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import GameCard from "@/components/GameCard";
+import AnimatedGameCard from "@/components/GameCard";
 import { getLatestGames } from "@/lib/rawg";
 import type { Game } from "@/lib/types";
 
@@ -24,7 +24,7 @@ export default function GamesList() {
       ) : (
         <FlatList
           data={games}
-          renderItem={({ item }) => <GameCard game={item} />}
+          renderItem={({ item, index }) => <AnimatedGameCard game={item} index={index} />}
           keyExtractor={(item) => item.slug}
           contentContainerStyle={{
             padding: 10,

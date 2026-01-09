@@ -1,12 +1,14 @@
 import { Stack } from "expo-router";
-import Logo from "@/components/Logo";
+import "../global.css";
+import { InfoIcon } from "@/components/Icons";
+import { Text } from "react-native";
 
 export default function RootLayout() {
   return (
     <Stack
       screenOptions={{
-        headerTitle: () => <Logo width={200} height={40} />,
-        headerTitleAlign: "center",
+        headerTitle: () => <Text className="font-bold text-2xl p-2">Metacritic</Text>,
+        headerRight: () => <InfoIcon />,
       }}
     />
   );

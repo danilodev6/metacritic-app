@@ -1,14 +1,53 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { useEffect, useRef } from "react";
+import { Animated, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import type { Game } from "@/lib/types";
+import Score from "./Score";
+import { Link } from "expo-router";
 
-const GameCard = ({ game }: { game: Game }) => {
+const Card = ({ game }: { game: Game }) => {
   return (
     <View style={styles.container}>
       <Image source={{ uri: game.image }} style={styles.image} />
       <Text style={styles.title}>{game.title}</Text>
-      <Text style={styles.score}> SCORE: {game.score}</Text>
-      <Text style={styles.description}>{game.description}</Text>
+      <Score score={game.score} maxScore={100} />
+      <Text style={styles.description}>{game.description.slice(0, 100)} ...</Text>
     </View>
+  );
+};
+
+const AnimatedGameCard = ({ game, index }: { game: Game; index: number }) => {
+  const opacity = useRef(new Animated.Value(0)).current;
+  const scale = useRef(new Animated.Value(0.8)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 300,
+        delay: index * 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scale, {
+        toValue: 1,
+        duration: 300,
+        delay: index * 300,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [opacity, scale, index]);
+  return (
+    <Link href={`/${game.slug}`} asChild>
+      <Pressable className={`active:opacity-50 rounded-[10px] active:shadow-none`}>
+        <Animated.View
+          style={{
+            opacity,
+            transform: [{ scale }],
+          }}
+        >
+          <Card game={game} />
+        </Animated.View>
+      </Pressable>
+    </Link>
   );
 };
 
@@ -48,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GameCard;
+export default AnimatedGameCard;
